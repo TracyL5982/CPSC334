@@ -6,3 +6,6 @@ git config --global user.name TracyL5982
 git add ip.md
 git commit -m "Updated IP address to $IP_ADDRESS on $(date)"
 git push origin main
+export DISPLAY=:0
+openbox &
+firefox --display=:0 --kiosk-monitor 0 --kiosk /home/student334/CPSC334/p5js_2024_09_13_19_48_27/index.html
