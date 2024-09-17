@@ -1,8 +1,5 @@
-//CPSC 334 Generative Art Project
-//By Tracy Xinran Li
-
 let A, B, C, D;
-let numPoints = 500; 
+let numPoints = 400; 
 let rBase;
 let points = [];
 let ripples = []; 
@@ -103,7 +100,7 @@ class Point {
   constructor(prevX, prevY, alphaValue) {
     this.prevX = prevX;
     this.prevY = prevY;
-    this.alpha = alphaValue; 
+    this.alpha = alphaValue; // Random transparency (alpha)
   }
 
   // Update the point using De Jong attractor equations
@@ -128,8 +125,8 @@ class Point {
   // Display the point as a white dot with random transparency
   show() {
     //conditional: strokeSize changes with min(width, height)
-    let strokeSize = min(width, height)/200; 
-    stroke(200, 0, 60, this.alpha);
+    let strokeSize = map(min(width, height), 0, 2000, 1, 10); 
+    stroke(255, this.alpha); 
     strokeWeight(strokeSize); 
     point(this.scaledX, this.scaledY); 
   }
@@ -160,7 +157,6 @@ class Ripple {
         x: x,
         y: y,
         direction: direction,
-        //Conditional: speed in proportion to min(width, height)
         speed: random(0.5, 1) * min(width, height) * 0.0025,
         initialAlpha: random(100, 255), 
         currentAlpha: 255, 
@@ -191,17 +187,13 @@ class Ripple {
     push();
     rotate(this.rotationAngle); 
     //Conditional: map stroke size of ripple
-    let strokeSize = min(width, height)/200 * 0.8; 
-    let ageRatio = (frameCount - this.points[0]?.birthFrame) / this.lifetime;
-    let r = map(ageRatio, 0, 1, 180, 0);  // Red to Blue
-    let g = map(ageRatio, 0, 1, 0, 0);    // No green change
-    let b = map(ageRatio, 0, 1, 60, 255);  // From Dark Red to Blue
-    stroke(r, 0, b, 150); 
+    let strokeSize = map(min(width, height), 0, 2000, 1, 10) * 0.8; 
+    stroke(255, 150); 
     strokeWeight(strokeSize); 
     noFill();
 
     for (let pt of this.points) {
-      stroke(r, 0, b, pt.currentAlpha);
+      stroke(255, pt.currentAlpha); 
       point(pt.x, pt.y);
     }
     pop();
