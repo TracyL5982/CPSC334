@@ -3,6 +3,8 @@ Generative Art Project in p5.js
 
 Link to Youtube Video: https://youtu.be/zcrOs2FX5zw
 
+Link to Notion Page: https://www.notion.so/Virtual-Heartbeat-10459c88764b80dd8003da76ad69c256?pvs=4
+
 Virtual Heartbeat explores the tension between the artificial and the organic. It employs a meticulous, programmatic method to portray the signals of life. Inspired by De Jong alogrithm in polar coordinates, the heart composed of points embodies the simplicity and elegance of this algorithm. As the parameters change overtime, points form unexpected shapes from time to time, introducing irregularity and organic feeling. The ripples amplified the heartbeats, dissipating from crimson to indigo. 
 
 # Usage:
