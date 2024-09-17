@@ -1,0 +1,12 @@
+[Unit]
+Description=Apache web server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=student334
+ExecStart=/bin/sh /home/student334/CPSC334/upload_ip.sh
+Type=simple
+
+[Install]
+WantedBy=default.target
