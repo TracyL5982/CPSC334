@@ -16,3 +16,6 @@ If you want it to run automatically whenever the Raspberry Pi reboots, copy the 
 Then do "sudo systemctl daemon-reload
 sudo systemctl enable upload-ip.service
 sudo systemctl status upload-ip.service"
+
+# Notes:
+The Ideal_Virtual_Heartbeat folder contains the code for, (of course,) what it would look like ideally if we could ignore the performance issues of a Raspberry Pi. Pi won't be happy running this, but you can run it on something with more powerful processors for fun!
