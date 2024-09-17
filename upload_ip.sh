@@ -7,4 +7,4 @@ git add ip.md
 git commit -m "Updated IP address to $IP_ADDRESS on $(date)"
 git push origin main
 export DISPLAY=:0
-firefox --display=:0 --kiosk-monitor 0 --kiosk /home/student334/CPSC334/p5js_2024_09_13_19_48_27/index.html
+firefox --display=:0 --kiosk-monitor 0 --kiosk /home/student334/CPSC334/virtual_heartbeat_p5/index.html
