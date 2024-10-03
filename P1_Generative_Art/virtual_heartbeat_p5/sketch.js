@@ -33,7 +33,6 @@ function setup() {
 
   rBase = baseRBase; 
 
-  // Generate points with random transparency
   for (let i = 0; i < numPoints; i++) {
     points.push(new Point(random(-2, 2), random(-2, 2), random(50, 255))); 
   }
@@ -52,9 +51,9 @@ function draw() {
   // Update heartbeat frequency based on cycle progress
   cycleProgress = (frameCount % (2 * cycleDuration)) / cycleDuration;
   if (cycleProgress <= 1) {
-    frequency = map(cycleProgress, 0, 1, 0.05, 0.1); // Gradually increase
+    frequency = map(cycleProgress, 0, 1, 0.05, 0.1); 
   } else {
-    frequency = map(cycleProgress, 1, 2, 0.1, 0.05); // Gradually decrease
+    frequency = map(cycleProgress, 1, 2, 0.1, 0.05); 
   }
 
   let heartbeat = sin(frameCount * frequency); 
@@ -74,7 +73,6 @@ function draw() {
   A = 2 * sin(millis() * 0.00001); 
   C = 2 * cos(millis() * 0.000015); 
 
-  // If we're halfway through drawing, adjust parameters to avoid convergence
   if (frameCount > floor(pMax * 0.6)) {
     A = random(-1, 1);
     B = random(-1, 1);  
@@ -93,7 +91,7 @@ function draw() {
     ripples[i].update();
     ripples[i].show();
     if (ripples[i].isDone()) {
-      ripples.splice(i, 1); // Remove ripple when it's done
+      ripples.splice(i, 1);
     }
   }
 }
@@ -114,7 +112,7 @@ class Point {
     // Conditional: Polar Coordinates Transformation (with smaller scaling)
     let dX = min(width, height) * 0.2 * currX; 
     let dY = min(width, height) * 0.2 * currY;
-    let dR = rBase * currY; // Radial distance
+    let dR = rBase * currY; 
 
     // Polar to Cartesian conversion
     this.scaledX = (dX * cos(dR) - dY * sin(dR)); 
@@ -193,9 +191,9 @@ class Ripple {
     //Conditional: map stroke size of ripple
     let strokeSize = min(width, height)/200 * 0.8; 
     let ageRatio = (frameCount - this.points[0]?.birthFrame) / this.lifetime;
-    let r = map(ageRatio, 0, 1, 180, 0);  // Red to Blue
-    let g = map(ageRatio, 0, 1, 0, 0);    // No green change
-    let b = map(ageRatio, 0, 1, 60, 255);  // From Dark Red to Blue
+    let r = map(ageRatio, 0, 1, 180, 0);  
+    let g = map(ageRatio, 0, 1, 0, 0);    
+    let b = map(ageRatio, 0, 1, 60, 255);  
     stroke(r, 0, b, 150); 
     strokeWeight(strokeSize); 
     noFill();
