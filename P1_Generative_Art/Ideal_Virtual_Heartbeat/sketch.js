@@ -1,12 +1,11 @@
 let A, B, C, D;
-let numPoints = 1000; // Number of points to generate
+let numPoints = 1000; 
 let rBase;
 let points = [];
 let ripples = [];
-let pMax = 200; // Total number of points to generate
-let baseRBase; // The base value for rBase
+let pMax = 200; 
+let baseRBase; 
 
-// New ECG data you provided
 let ecg_data = [
   -0.11252183, -2.8272038, -3.7738969, -4.3497511, -4.376041, -3.4749863, -2.1814082, -1.8182865, 
   -1.2505219, -0.47749208, -0.36380791, -0.49195659, -0.42185509, -0.30920086, -0.4959387, 
@@ -30,14 +29,14 @@ let ecg_data = [
 ];
 
 let ecgIndex = 0;
-let samplingRate = 130; // 140 Hz (assumed)
-let frameDuration = 1000 / samplingRate; // Time between ECG points in milliseconds
+let samplingRate = 130; 
+let frameDuration = 1000 / samplingRate; 
 let prevHeartbeat = 0;
 
 function setup() {
-  createCanvas(windowWidth, windowHeight); // Full-screen canvas
-  background(0); // Black background
-  strokeWeight(5); // Thicker stroke for the points
+  createCanvas(windowWidth, windowHeight); 
+  background(0); 
+  strokeWeight(5); 
   noFill();
 
   // Initialize De Jong attractor parameters with random values
@@ -47,32 +46,29 @@ function setup() {
   D = 0.5;
 
   baseRBase = min(width, height) / 700 * 1.25 * PI;
-  rBase = baseRBase; // Initial value for rBase
+  rBase = baseRBase; 
 
   // Generate points with random transparency
   for (let i = 0; i < numPoints; i++) {
-    points.push(new Point(random(-2, 2), random(-2, 2), random(50, 255))); // Random alpha for transparency
+    points.push(new Point(random(-2, 2), random(-2, 2), random(50, 255))); 
   }
 
-  setInterval(updateHeartbeat, frameDuration); // Update heartbeat based on ECG data
+  setInterval(updateHeartbeat, frameDuration); 
 }
 
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight); // Adjust canvas size when window is resized
-  background(0); // Redraw background to avoid leftover artifacts
+  resizeCanvas(windowWidth, windowHeight); 
+  background(0); 
 }
 
-// Function to update heartbeat using ECG data
+// update heartbeat using ECG data
 function updateHeartbeat() {
-  // Set the heartbeat intensity based on the current ECG data point
+  
   let heartbeat = ecg_data[ecgIndex];
-  ecgIndex = (ecgIndex + 1) % ecg_data.length; // Loop the ECG data
-
-  // Scale the ECG value to create a heartbeat effect
+  ecgIndex = (ecgIndex + 1) % ecg_data.length; 
   rBase = baseRBase + heartbeat * baseRBase * 0.5;
   
   if (prevHeartbeat < -0.98 && heartbeat > -0.99) {
-    // Create a ripple when the heart starts expanding
     createRipple();
   }
 
@@ -80,27 +76,20 @@ function updateHeartbeat() {
 }
 
 function draw() {
-  // Clear the background slightly to avoid accumulation, but keep some trace
-  fill(0, 0, 0, 50); // Black with partial transparency
+  fill(0, 0, 0, 50); 
   rect(0, 0, width, height);
-
-  // Translate the origin to the center of the canvas and apply rotation over time
   translate(width / 2, height / 2);
-  rotate(millis() * 0.0002); // Rotate the shape over time
+  rotate(millis() * 0.0002); 
+  A = 2 * sin(millis() * 0.00001); 
+  C = 2 * cos(millis() * 0.000015); 
 
-  // Update A and C over time for smoother animation
-  A = 2 * sin(millis() * 0.00001); // Animate A over time
-  C = 2 * cos(millis() * 0.000015); // Animate C separately for dynamic behavior
-
-  // If we're halfway through drawing, adjust parameters to avoid convergence
   if (frameCount > floor(pMax * 0.6)) {
     A = random(-1, 1);
-    B = random(-1, 1);  // Allow B to change as well for more dynamic output
+    B = random(-1, 1);  
     C = random(-1, 1);
-    D = random(-1, 1);  // Introduce more randomness to D as well
+    D = random(-1, 1);  
   }
 
-  // Update and draw all points
   for (let pt of points) {
     pt.update();
     pt.show();
@@ -110,44 +99,38 @@ function draw() {
     ripples[i].update();
     ripples[i].show();
     if (ripples[i].isDone()) {
-      ripples.splice(i, 1); // Remove ripple when it's done
+      ripples.splice(i, 1); 
     }
   }
 
 }
 
-// Point class to handle each individual point's movement
 class Point {
   constructor(prevX, prevY, alphaValue) {
     this.prevX = prevX;
     this.prevY = prevY;
-    this.alpha = alphaValue; // Random transparency (alpha)
+    this.alpha = alphaValue; 
   }
 
-  // Update the point using De Jong attractor equations
   update() {
     let currX = sin(TWO_PI * A * this.prevY) - cos(TWO_PI * B * this.prevX);
     let currY = sin(TWO_PI * C * this.prevX) - cos(TWO_PI * D * this.prevY);
 
-    // Polar Coordinates Transformation (with smaller scaling)
-    let dX = width * 0.1 * currX; // Smaller scaling to make the sphere smaller
+    let dX = width * 0.1 * currX; 
     let dY = height * 0.1 * currY;
-    let dR = rBase * currY; // Radial distance
+    let dR = rBase * currY; 
 
-    // Polar to Cartesian conversion
-    this.scaledX = (dX * cos(dR) - dY * sin(dR)); // X coordinate in polar form
-    this.scaledY = (dY * cos(dR) + dX * sin(dR)); // Y coordinate in polar form
+    this.scaledX = (dX * cos(dR) - dY * sin(dR)); 
+    this.scaledY = (dY * cos(dR) + dX * sin(dR)); 
 
-    // Update the previous position with current values
     this.prevX = currX;
     this.prevY = currY;
   }
 
-  // Display the point as a white dot with random transparency
   show() {
     stroke(200, 0, 60, this.alpha);
-    strokeWeight(4); // Change stroke weight to 2 for smaller points
-    point(this.scaledX, this.scaledY); // Draw the point at its current position
+    strokeWeight(4); 
+    point(this.scaledX, this.scaledY); 
   }
 }
 
@@ -159,19 +142,13 @@ function mousePressed() {
   }
 }
 
-// Ripple class to create the ripple effect
 class Ripple {
   constructor() {
     this.points = [];
     this.lifetime = 800; 
-
-    // Conditional: Ripple radius proportional to the smaller dimension of width and height
     this.radius = min(width, height) * 0.3; 
-
-    // Random rotation angle for the ripple
     this.rotationAngle = random(TWO_PI);
 
-    // Generate points along the circle's perimeter
     for (let i = 0; i < 100; i++) {
       let angle = noise(i * 0.1) * TWO_PI;
       let x = this.radius * cos(angle);
@@ -184,7 +161,6 @@ class Ripple {
         x: x,
         y: y,
         direction: direction,
-        //Conditional: speed in proportion to min(width, height)
         speed: random(0.5, 1) * min(width, height) * 0.001,
         initialAlpha: random(100, 255), 
         currentAlpha: 255, 
@@ -194,17 +170,14 @@ class Ripple {
   }
 
   update() {
-    // Update each point's position along its direction
     for (let i = this.points.length - 1; i >= 0; i--) {
       let pt = this.points[i];
       pt.x += pt.direction.x * pt.speed;
       pt.y += pt.direction.y * pt.speed;
 
-      // Reduce transparency over time
       let age = frameCount - pt.birthFrame;
       pt.currentAlpha = map(age, 0, this.lifetime, pt.initialAlpha, 0);
 
-      // Remove point if it becomes completely transparent
       if (pt.currentAlpha <= 0) {
         this.points.splice(i, 1); 
       }
@@ -212,16 +185,16 @@ class Ripple {
   }
 
   show() {
-    if (this.points.length > 0) { // Check that points still exist
+    if (this.points.length > 0) { 
       push();
       rotate(this.rotationAngle);
 
       let ageRatio = (frameCount - this.points[0]?.birthFrame) / this.lifetime;
-      let r = map(ageRatio, 0, 1, 180, 0);  // Red to Blue
-      let g = map(ageRatio, 0, 1, 0, 0);    // No green change
-      let b = map(ageRatio, 0, 1, 60, 255);  // From Dark Red to Blue
+      let r = map(ageRatio, 0, 1, 180, 0);  
+      let g = map(ageRatio, 0, 1, 0, 0);    
+      let b = map(ageRatio, 0, 1, 60, 255);  
 
-      stroke(r, 0, b, 150); // Gradually transition from dark red to blue
+      stroke(r, 0, b, 150); 
       strokeWeight(5);
       noFill();
 
