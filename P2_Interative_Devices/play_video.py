@@ -12,8 +12,6 @@ VIDEO_PATH = "/home/student334/CPSC334/P2_Interative_Devices/SkySquareSlow.mp4"
 
 playing = False 
 
-move_distance = 10  
-
 def play_video():
     global playing  
     pygame.init()
@@ -47,18 +45,6 @@ def play_video():
     y_position = (screen_height // 2) - (video_size // 2)
 
     print(f"Initial video position: {x_position}, {y_position}")  
-
-    def move_video(time_shift):
-        nonlocal current_frame
-        new_time = (current_frame / fps) + time_shift
-
-        if new_time < 0:
-            new_time = video_length + new_time  
-        elif new_time > video_length:
-            new_time = new_time - video_length 
-
-        current_frame = int(new_time * fps)
-        cap.set(cv2.CAP_PROP_POS_FRAMES, current_frame)
 
     while cap.isOpened():
         ret, frame = cap.read()
