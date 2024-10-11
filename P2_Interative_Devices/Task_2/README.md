@@ -24,6 +24,15 @@ The focus is on the pure senses, perceptions, and experiences.
 
 Notion Page: https://www.notion.so/Your-Sky-Machine-11459c88764b80989e15f99305e65aff
 
+## **File Organization**
+P2_ESP32_Code --- Final code deployed on ESP32 in this project
+RaspberryPi_Code_In_Progress --- Progress code on Raspberry Pi that incrementally build up to the final version
+hardware_testing --- ino code to test and calibrate the switch, the button, and the joystick
+lab_code --- code from labs related to this project
+unused_videos --- videos that I tried when finetuning it and ended up not using in the final version. 
+Sky_450_900.mp4 --- the video I ended up using
+play_video_two_modes.py --- Final code deployed on Raspberry Pi in this project
+
 ## **Instructions**
 
 1. Check the circuit connection
