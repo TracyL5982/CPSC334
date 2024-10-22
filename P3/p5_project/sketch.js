@@ -1,5 +1,7 @@
 let vid;
 let playing = true;
+// map the reading from the humidity sensor to cloudDensity
+// cloudDensity is a value between 0 and 1
 let cloudDensity = 0.5;
 let circleDiameter; 
 let noiseOffsetX = 0;  
