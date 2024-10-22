@@ -16,7 +16,7 @@ let noiseOffsetY = 0;
 // AFTERNOON --photoresistors on the west side brighter then the east side --> sometime in the afternoon
   // depending on the brightness, can be aftersunset(darkest), sunset, afternoon(brightest)
 
-let skyState = 2;
+let skyState = 0;
 let videoFiles = ['night.mp4', 'beforesunrise.mp4', 'sunrise.mp4', 'morning.mp4', 'noon.mp4', 'afternoon.mp4', 'sunset.mp4', 'aftersunset.mp4'];
 
 function setup() {
