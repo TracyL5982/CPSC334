@@ -23,7 +23,7 @@ let sensorData;
 // Variables to store the parsed sensor data
 let light1, light2, light3, light4, temperature, humidity, pressure, altitude;
 
-let skyState = 0;
+let skyState = 5;
 let videoFiles = ['night.mp4', 'beforesunrise.mp4', 'sunrise.mp4', 'morning.mp4', 'noon.mp4', 'afternoon.mp4', 'sunset.mp4', 'aftersunset.mp4'];
 
 function setup() {
