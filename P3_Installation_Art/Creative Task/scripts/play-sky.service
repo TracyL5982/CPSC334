@@ -1,0 +1,13 @@
+[Unit]
+Description=Play Sky Service
+After=network.target
+
+[Service]
+ExecStart=/home/student334/installation/CPSC334/P3_Installation_Art/Creative Task/scripts/play.sh
+Restart=always
+RestartSec=5
+User=student334
+WorkingDirectory=/home/student334/installation/CPSC334/P3_Installation_Art/Creative Task/scripts
+
+[Install]
+WantedBy=multi-user.target
